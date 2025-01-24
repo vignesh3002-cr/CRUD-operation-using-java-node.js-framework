@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student's information </title>
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+    <h1>Student's information</h1>
+    <hr>
+   <% if(locals.head){%>
+        <h2><%= head %></h2>
+        <form action="/submited" method="post">
+            <div class="frm">
+                <label class="lbl">Name:</label>
+                <input type="text" class="txt" autofocus="true" name="newname">
+                <label class="lbl">Mobile no:</label>
+                <input type="number" class="txt" autofocus="true" name="newmobile" >
+                <label class="lbl">College name:</label>
+                <input type="text" class="txt" autofocus="true" name="newcollege">
+                <label class="lbl">Course name:</label>
+                <input type="text" class="txt" autofocus="true" name="newcourse">
+                <label class="lbl">Email:</label>
+                <input type="email" class="txt" autofocus="true" name="newemail"> 
+            </div>
+            <button class="sub" type="submit">Submit</button>
+        </form>
+ <% }else if(locals.studentdatas){%>
+        <div id="container">
+            <label class="column bx">Delete</label>
+            <div class="column n">Name</div>
+            <div class="column mn">mobile_no</div>
+            <div class="column clgn">College name</div>
+            <div class="column crsn">Course name</div>
+            <div class="column em">Email</div>  
+            <div class="column op"></div>  
+            <div class="column op"></div>    
+        </div>
+       <% for(let datas of studentdatas){%>
+            <div id="records">
+                <form action="/delete" method="post">
+                    <div class=" row box"><input type="checkbox" onchange="this.form.submit()" name="deletedatasid" value="<%=datas.id %>"></div>
+                </form>        
+                <div class="row a"><%= datas.name %></div>
+                <div class="row b"><%= datas.mobile_no %></div>
+                <div class="row c"><%= datas.colleg_name %></div>
+                <div class="row d"><%= datas.course_name %></div>
+                <div class="row e"><%= datas.email %></div>
+                <form action="/read" method="post">  
+                    <div class="row op"><button class="tbtn" type="submit" value="<%=datas.id%>" name="view">View</button></div>
+                </form>      
+                <form action="/edit" method="post">
+                    <div class="row op"><button class="tbtn" type="submit" value="<%=datas.id%>" name="edit">Edit</button></div>  
+                </form>  
+            </div>
+        <% } %>
+        <form action="/add" method="post">
+            <div class="button">
+                <button class="btn add" type="submit">Add</button>
+            </div>
+        </form>  
+   <% } else if(locals.up){%>
+        <h3><%= tit %></h3>
+        <form action="/updated" method="post">
+                <div class="frm">
+                    <label class="lbl">Name:</label>
+                    <input type="text" class="txt" autofocus="true" name="updatename" autocomplete="off" value="<%=up.name %>">
+                    <label class="lbl">Mobile no:</label>
+                    <input type="number" class="txt" autofocus="true" name="updatemobile" autocomplete="off" value="<%=up.mobile_no %>">
+                    <label class="lbl">College name:</label>
+                    <input type="text" class="txt" autofocus="true" name="updatecollege" autocomplete="off" value="<%=up.colleg_name %>">
+                    <label class="lbl">Course name:</label>
+                    <input type="text" class="txt" autofocus="true" name="updatecourse" autocomplete="off" value="<%=up.course_name %>">
+                    <label class="lbl">Email:</label>
+                    <input type="email" class="txt" autofocus="true" name="updateemail" autocomplete="off" value="<%=up.email %>"> 
+                </div>
+                <button class="sub" type="submit" value="<%=up.id%>" name="updateid">Click to update</button>
+        </form>
+  
+  <% } else if(locals.rd){%>
+        <div id="container">
+            <div class="column n">Name</div>
+            <div class="column mn">mobile_no</div>
+            <div class="column clgn">College name</div>
+            <div class="column crsn">Course name</div>
+            <div class="column em">Email</div>   
+        </div>
+        <div id="records">      
+            <div class="row a"><%= rd.name %></div>
+            <div class="row b"><%= rd.mobile_no %></div>
+            <div class="row c"><%= rd.colleg_name %></div>
+            <div class="row d"><%= rd.course_name %></div>
+            <div class="row e"><%= rd.email %></div>
+        </div>
+        <form action="/viewed" method="post">
+            <div class="button">
+                <button class="btn add vw" type="submit">ok</button>
+            </div>
+        </form> 
+    <%}%>
+</body>
+</html>
+
+
